@@ -7,6 +7,15 @@ $dsn = "mysql:host=$dbHost;dbname=$dbName";
 
 $pdo = new PDO($dsn, $dbUserName, $dbPassword,[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $stmt = $pdo->prepare("INSERT INTO felhasznalok (nev, email, kor) VALUES (:nev, :email, :kor)");
+    $stmt->execute([
+            ':nev'=>$_POST['nev'],
+            ':email'=>$_POST['email'],
+            ':kor'=>$_POST['kor']
+        ]);
+}
+
 $result = $pdo->query("SELECT * FROM felhasznalok;");
 
 
@@ -24,7 +33,25 @@ $result = $pdo->query("SELECT * FROM felhasznalok;");
     <title>PHP-teszt</title>
 </head>
 <body>
-
+    <section>
+        <h2>Új felhasználó felvitele:</h2>
+        <form action="#" method="post">
+            <div>
+                <label for="nev">Név: </label>
+                <input type="text" name="nev" id="nev">
+            </div>
+            <div>
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div>
+                <label for="kor">Kor: </label>
+                <input type="number" name="kor" id="kor">
+            </div>
+            <input type="submit" value="Felvitel">
+        </form>
+    </section>
+    
     <table>
         <thead>
             <tr>
