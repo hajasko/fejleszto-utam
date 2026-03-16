@@ -8,12 +8,18 @@ $dsn = "mysql:host=$dbHost;dbname=$dbName";
 $pdo = new PDO($dsn, $dbUserName, $dbPassword,[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $pdo->prepare("INSERT INTO felhasznalok (nev, email, kor) VALUES (:nev, :email, :kor)");
-    $stmt->execute([
-            ':nev'=>$_POST['nev'],
-            ':email'=>$_POST['email'],
-            ':kor'=>$_POST['kor']
-        ]);
+    $nev = trim($_POST['nev']);
+    $email = trim($_POST['email']);
+    $kor = trim($_POST['kor']);
+
+    if(!empty($nev) && !empty($email) && !empty($kor)) {
+        $stmt = $pdo->prepare("INSERT INTO felhasznalok (nev, email, kor) VALUES (:nev, :email, :kor)");
+        $stmt->execute([
+                ':nev'=>$nev,
+                ':email'=>$email,
+                ':kor'=>$kor
+            ]);
+    }
 }
 
 $result = $pdo->query("SELECT * FROM felhasznalok;");
