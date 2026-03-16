@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':email'=>$email,
                 ':kor'=>$kor
             ]);
+        header('Location: index.php');
+        exit;
     }
 }
 
