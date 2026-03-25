@@ -7,13 +7,14 @@ if (!empty($_SESSION['felhasznalo'])) {
 }
 
 $hiba = '';
+$jelszoHash = '$2y$10$0eOT81xZN5/j98mQRP5b9O8Mn4Cv5ffpj066PYSSku438eRH5ojWC';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST['email'];
     $jelszo = $_POST['jelszo'];
 
-    if ($email == 'admin@teszt.hu' && $jelszo == 'titok123') {
+    if ($email == 'admin@teszt.hu' && password_verify($jelszo, $jelszoHash)) {
         $_SESSION['felhasznalo'] = 'admin';
         header('Location: dashboard.php');
         exit;
