@@ -19,6 +19,13 @@ if (empty($_SESSION['felhasznalo'])) {
 </head>
 <body>
     <h1>Üdvözöllek <?php echo $_SESSION['felhasznalo']?>!!!</h1>
+    <?php 
+        if (!empty($_SESSION['uzenet'])):
+            echo "<p>".$_SESSION['uzenet']."</p>";
+            unset($_SESSION['uzenet']);
+        endif;
+    ?>
+    
     <div>
         <a href="./new_post.php">Új bejegyzés</a>
     </div>
